@@ -1,0 +1,5 @@
+#!/bin/bash
+export _JAVA_AWT_WM_NOREPARENTING=1
+wmname LG3D &
+
+/usr/bin/burpsuite
