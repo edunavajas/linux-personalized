@@ -30,7 +30,9 @@ apt install -y build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libx
  libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-glx0-dev \
  libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev \
  libxcb-xfixes0-dev meson ninja-build uthash-dev cmake polybar rofi zsh imagemagick feh sh-autocomplete zsh-autosuggestions \
- zsh-syntax-highlighting ranger
+ zsh-syntax-highlighting ranger xcb-proto libxcb-ewmh-dev libxcb-icccm4-dev libxcb-randr0-dev libxcb-util-dev
+
+wait
 
 apt update -y
 
@@ -55,6 +57,7 @@ git clone https://github.com/baskerville/bspwm.git
 cd bspwm
 make
 sudo make install
+wait
 cd ..
 
 git clone https://github.com/baskerville/sxhkd.git
@@ -62,6 +65,7 @@ git clone https://github.com/baskerville/sxhkd.git
 cd sxhkd
 make
 sudo make install
+wait
 cd ..
 
 mkdir ~/.config/{bspwm,sxhkd}
