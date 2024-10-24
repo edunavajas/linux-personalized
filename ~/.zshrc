@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Created by newuser for 5.9
-source /home/eduknives/powerlevel10k/powerlevel10k.zsh-theme
+source /home/$DEFAULT_USER/powerlevel10k/powerlevel10k.zsh-theme
 
 # ZSH AutoSuggestions PLugin
 
@@ -81,12 +81,12 @@ alias ls='lsd --group-dirs=first'
 function settarget(){
     ip_address=$1
     machine_name=$2
-    echo "$ip_address $machine_name" > /home/eduknives/.config/bin/target
+    echo "$ip_address $machine_name" > /home/$DEFAULT_USER/.config/bin/target
 }
 
 
 function cleartarget(){
-    echo '' > /home/eduknives/.config/bin/target
+    echo '' > /home/$DEFAULT_USER/.config/bin/target
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

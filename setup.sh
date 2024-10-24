@@ -11,18 +11,14 @@ fi
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Path to the sources.list file
 SOURCE_LIST="/etc/apt/sources.list"
 
-# Backup the sources.list file before modifying it
 cp $SOURCE_LIST "${SOURCE_LIST}.backup"
 
-# Comment out the first line in the sources.list file
 sed -i '1 s/^/#/' $SOURCE_LIST
 
 apt update -y
 
-# Update the package list
 if grep -qi "parrot" /etc/os-release; then
     parrot-upgrade
 else
@@ -34,17 +30,15 @@ apt install -y build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libx
  libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-glx0-dev \
  libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev \
  libxcb-xfixes0-dev meson ninja-build uthash-dev cmake polybar rofi zsh imagemagick feh sh-autocomplete zsh-autosuggestions \
- zsh-syntax-highlighting
+ zsh-syntax-highlighting ranger
 
 apt update -y
 
 cd
 
-# Get the path to the Downloads directory in the user's language
 DOWNLOADS_DIR=$(xdg-user-dir DOWNLOAD)
 
 
-# Check if the bspwm/examples directory exists in Downloads
 if [ -d "$DOWNLOADS_DIR" ]; then
     echo "Changing directory to $DOWNLOADS_DIR..."
     cd "$DOWNLOADS_DIR" || exit
@@ -74,14 +68,12 @@ mkdir ~/.config/{bspwm,sxhkd}
 
 cd bspwm/examples
 
-# Check if the current user is root
 if [ "$EUID" -eq 0 ]; then
 
     DEFAULT_USER=$(logname)
     
     echo "Currently running as root. Switching to user: $DEFAULT_USER..."
     
-    # Switch to the normal user
     su -l "$DEFAULT_USER"
 else
     echo "Already running as a normal user."
@@ -94,7 +86,6 @@ cp sxhkdrc ~/.config/sxhkd/
 # Define the target sxhkd configuration file path
 SXHKD_CONFIG="/home/$DEFAULT_USER/.config/sxhkd/sxhkdrc"
 
-# Create the directory if it doesn't exist
 mkdir -p "/home/$DEFAULT_USER/.config/sxhkd/"
 
 cat "$SCRIPT_DIR/.config/sxhkd/sxhkdrc" > "$SXHKD_CONFIG"
@@ -103,14 +94,10 @@ echo "sxhkd configuration has been written to $SXHKD_CONFIG"
 
 cd "/home/$DEFAULT_USER/.config/bspwm"
 
-# Create the scripts directory if it does not exist
 mkdir -p scripts
 
-# Create and write the bspwm_resize script
 envsubst < "$SCRIPT_DIR/scripts/bspwm_resize" > ~/.config/bspwm/bspwmrc
 
-
-# Give execution permissions to the bspwm_resize script
 chmod +x scripts/bspwm_resize
 
 echo "The bspwm_resize script has been created and made executable in /home/$DEFAULT_USER/.config/bspwm/scripts/"
@@ -250,3 +237,98 @@ sudo su
 touch burpsuite-launcher
 chmod +x burpsuite-launcher
 envsubst < "$SCRIPT_DIR/usr/bin/burpsuite-launcher" > burpsuite-launcher
+exit
+
+# Configure Polybar
+cd
+envsubst < "$SCRIPT_DIR/.config/polybar/launch.sh" > .config/polybar/launch.sh
+envsubst < "$SCRIPT_DIR/.config/polybar/workspace.ini" > .config/polybar/workspace.ini
+envsubst < "$SCRIPT_DIR/.config/polybar/current.ini" > .config/polybar/current.ini
+
+cd ~/.config/bspwm/scripts
+touch ethernet_status.sh
+chmod +x ethernet_status.sh
+envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/ethernet_status.sh" > ethernet_status.sh
+
+touch ethernet_status_copy.sh
+chmod +x ethernet_status_copy.sh
+envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/ethernet_status_copy.sh" > ethernet_status_copy.sh
+
+
+touch vpn_status.sh
+chmod +x vpn_status.sh
+envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/vpn_status.sh" > vpn_status.sh
+
+
+touch victim_to_hack.sh
+chmod +x victim_to_hack.sh
+envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/victim_to_hack.sh" > victim_to_hack.sh
+
+
+cd
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+sudo su 
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+exit
+
+apt remove -y neovim
+git clone https://github.com/NvChad/starter ~/.config/nvim
+
+
+latest_nvim=$(curl -s https://api.github.com/repos/neovim/neovim/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+
+wget https://github.com/neovim/neovim/releases/download/$latest_nvim/nvim-linux64.tar.gz -O nvim-linux64.tar.gz
+
+
+sudo mkdir -p /opt/nvim
+
+sudo mv nvim-linux64.tar.gz /opt/nvim/
+
+cd /opt/nvim
+
+sudo tar -xf nvim-linux64.tar.gz
+
+sudo rm nvim-linux64.tar.gz
+
+cd ~/.config/nvim
+
+envsubst < "$SCRIPT_DIR/.config/nvim/init.lua" > init.lua
+
+sudo apt install -y locate
+sudo updatedb
+umount /run/user/1000/gvfs
+umount /run/user/1000/doc
+sudo updatedb
+
+cd ~/.config
+mkdir rofi
+cd rofi
+mkdir themes
+cd themes
+
+cd /opt
+sudo git clone https://github.com/newmanls/rofi-themes-collection
+cd rofi-themes-collection/themes
+sudo su
+cp * /home/$DEFAULT_USER/.config/rofi/themes/
+exit
+
+apt install i3lock
+cd /opt
+git clone git clone https://github.com/meskarune/i3lock-fancy.git
+sudo su
+cd i3lock-fancy
+make install
+exit
+
+envsubst < "$SCRIPT_DIR/nvim-plugins/init.lua" > ~/.local/share/nvim/lazy/NvChad/lua/nvchad/plugins/init.lua
+
+sudo su
+cd /root/.config/clipit
+cp -r /home/$DEFAULT_USER/.config/nvim .
+exit
+
+rofi-theme-selector
