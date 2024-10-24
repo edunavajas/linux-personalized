@@ -34,6 +34,9 @@ apt install -y build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libx
 
 wait
 
+sudo apt install -y xcb-proto libxcb-ewmh-dev libxcb-icccm4-dev libxcb-randr0-dev libxcb-util-dev
+
+
 apt update -y
 
 cd
