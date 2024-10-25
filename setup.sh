@@ -68,6 +68,9 @@ run_command "Installing development tools and applications" "apt install -y libx
 
 run_command "Installing zsh syntax highlighting and other utilities" "apt install -y zsh-syntax-highlighting ranger xcb-proto libxcb-ewmh-dev libxcb-icccm4-dev libxcb-randr0-dev libxcb-util-dev"
 
+run_command "Installing bspwm and sxhkd" "apt install -y bspwm sxhkd"
+
+
 run_command "Updating package lists again" "apt update -y"
 
 echo "Changing to home directory..."
@@ -76,41 +79,6 @@ update_progress
 
 echo "Determining Downloads directory..."
 DOWNLOADS_DIR=$(xdg-user-dir DOWNLOAD)
-if [ -d "$DOWNLOADS_DIR" ]; then
-    echo "Changing directory to $DOWNLOADS_DIR..."
-    cd "$DOWNLOADS_DIR" || exit
-else
-    echo "The directory $DOWNLOADS_DIR does not exist. Creating it now..."
-    mkdir -p "$DOWNLOADS_DIR"
-    echo "Directory created. Changing directory to $DOWNLOADS_DIR..."
-    cd "$DOWNLOADS_DIR" || exit
-fi
-update_progress
-
-run_command "Cloning bspwm repository" "git clone https://github.com/baskerville/bspwm.git"
-
-echo "Building and installing bspwm..."
-cd bspwm
-make >/dev/null 2>&1
-make install >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to build and install bspwm."
-    exit 1
-fi
-cd ..
-update_progress
-
-run_command "Cloning sxhkd repository" "git clone https://github.com/baskerville/sxhkd.git"
-
-echo "Building and installing sxhkd..."
-cd sxhkd
-make >/dev/null 2>&1
-make install >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to build and install sxhkd."
-    exit 1
-fi
-cd ..
 update_progress
 
 run_command "Creating configuration directories for bspwm and sxhkd" "mkdir -p /home/$DEFAULT_USER/.config/{bspwm,sxhkd}"
@@ -366,9 +334,9 @@ rofi-theme-selector
 echo -ne "\nScript completed successfully.\n"
 
 
-Neovim plugins for test...(60/30)
-XDG_DATA_DIRS needs to be set for this script to function correctly.
-Using dirs from $PATH: /usr/local/share:/usr/share
-Checking themes in: /usr/share/rofi/themes
-/usr/bin/sed: no se puede leer /root/.config/rofi/config.rasi: No existe el fichero o el directorio
+# Neovim plugins for test...(60/30)
+# XDG_DATA_DIRS needs to be set for this script to function correctly.
+# Using dirs from $PATH: /usr/local/share:/usr/share
+# Checking themes in: /usr/share/rofi/themes
+# /usr/bin/sed: no se puede leer /root/.config/rofi/config.rasi: No existe el fichero o el directorio
 
