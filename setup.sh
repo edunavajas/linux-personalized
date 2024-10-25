@@ -62,7 +62,7 @@ run_command "Installing additional XCB and related development packages" "apt in
 
 run_command "Installing XCB image and rendering packages" "apt install -y libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev"
 
-run_command "Installing development tools and applications" "apt install -y libxcb-xfixes0-dev meson ninja-build uthash-dev cmake polybar rofi zsh imagemagick feh sh-autocomplete zsh-autosuggestions"
+run_command "Installing development tools and applications" "apt install -y libxcb-xfixes0-dev meson ninja-build uthash-dev cmake polybar rofi zsh imagemagick feh zsh-autosuggestions"
 
 run_command "Installing zsh syntax highlighting and other utilities" "apt install -y zsh-syntax-highlighting ranger xcb-proto libxcb-ewmh-dev libxcb-icccm4-dev libxcb-randr0-dev libxcb-util-dev"
 
