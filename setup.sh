@@ -127,7 +127,7 @@ update_progress
 
 echo "Writing sxhkd configuration..."
 SXHKD_CONFIG="/home/$DEFAULT_USER/.config/sxhkd/sxhkdrc"
-cat "$SCRIPT_DIR/.config/sxhkd/sxhkdrc" > "$SXHKD_CONFIG"
+envsubst < "$SCRIPT_DIR/.config/sxhkd/sxhkdrc" > "$SXHKD_CONFIG"
 update_progress
 
 echo "Creating scripts directory in bspwm configuration..."
