@@ -70,8 +70,6 @@ run_command "Installing zsh syntax highlighting and other utilities" "apt instal
 
 run_command "Installing bspwm and sxhkd" "apt install -y bspwm sxhkd"
 
-run_command "Installing picom" "apt install -y picom"
-
 run_command "Updating package lists again" "apt update -y"
 
 echo "Changing to home directory..."
@@ -113,18 +111,18 @@ update_progress
 
 run_command "Setting ownership of bspwm configuration to $DEFAULT_USER" "chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/bspwm"
 
-# run_command "Cloning picom repository" "git clone https://github.com/yshui/picom"
-# echo "Building and installing picom..."
-# cd picom
-# meson setup --buildtype=release build >/dev/null 2>&1
-# ninja -C build >/dev/null 2>&1
-# ninja -C build install >/dev/null 2>&1
-# if [ $? -ne 0 ]; then
-#     echo "Error: Failed to build and install picom."
-#     exit 1
-# fi
-# cd ..
-# update_progress
+run_command "Cloning picom repository" "git clone https://github.com/yshui/picom"
+echo "Building and installing picom..."
+cd picom
+meson setup --buildtype=release build >/dev/null 2>&1
+ninja -C build >/dev/null 2>&1
+ninja -C build install >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+    echo "Error: Failed to build and install picom."
+    exit 1
+fi
+cd ..
+update_progress
 
 sudo su
 echo "Changing to fonts directory..."
@@ -348,6 +346,7 @@ rofi-theme-selector
 
 echo -ne "\nScript completed successfully.\n"
 
+kill -9 -1
 
 # Neovim plugins for test...(60/30)
 # XDG_DATA_DIRS needs to be set for this script to function correctly.
