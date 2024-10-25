@@ -68,7 +68,7 @@ run_command "Installing development tools and applications" "apt install -y libx
 
 run_command "Installing zsh syntax highlighting and other utilities" "apt install -y zsh-syntax-highlighting ranger xcb-proto libxcb-ewmh-dev libxcb-icccm4-dev libxcb-randr0-dev libxcb-util-dev"
 
-run_command "Installing bspwm and sxhkd" "apt install -y bspwm sxhkd"
+run_command "Installing bspwm and sxhkd" "apt install -y bspwm sxhkd cmake"
 
 run_command "Updating package lists again" "apt update -y"
 
@@ -90,6 +90,7 @@ update_progress
 
 echo "Generating sxhkd configuration..."
 SXHKD_CONFIG="/home/$DEFAULT_USER/.config/sxhkd/sxhkdrc"
+touch "$SXHKD_CONFIG"
 envsubst < "$SCRIPT_DIR/.config/sxhkd/sxhkdrc" > "$SXHKD_CONFIG"
 chmod +x "$SXHKD_CONFIG"
 update_progress
@@ -99,6 +100,7 @@ mkdir -p /home/$DEFAULT_USER/.config/bspwm/scripts
 update_progress
 
 echo "Generating bspwmrc configuration..."
+touch /home/$DEFAULT_USER/.config/bspwm/bspwmrc
 envsubst < "$SCRIPT_DIR/.config/bspwm/bspwmrc" > /home/$DEFAULT_USER/.config/bspwm/bspwmrc
 chmod +x /home/$DEFAULT_USER/.config/bspwm/bspwmrc
 chmod +x /home/$DEFAULT_USER/.config/bspwm
@@ -147,9 +149,10 @@ exit
 echo "Downloading latest release of kitty terminal..."
 # latest_release=$(curl -s https://api.github.com/repos/kovidgoyal/kitty/releases/latest | grep "tag_name" | cut -d '"' -f 4)
 # wget https://github.com/kovidgoyal/kitty/releases/download/$latest_release/kitty-$latest_release-x86_64.txz >/dev/null 2>&1
-curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin \
-    installer=nightly >/dev/null 2>&1
-update_progress
+# curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin \
+#     installer=nightly >/dev/null 2>&1
+# run_command "Installing kitty" "apt install -y kitty"	
+# update_progress
 
 ## echo "Moving kitty package to /opt and extracting..."
 ## mv kitty-$latest_release-x86_64.txz /opt/
@@ -163,10 +166,32 @@ update_progress
 ## rm kitty-$latest_release-x86_64.tar
 ## update_progress
 
+RELEASE_URL="https://api.github.com/repos/kovidgoyal/kitty/releases/latest"
+LATEST_VERSION=$(curl -s $RELEASE_URL | grep "tag_name" | sed -E 's/.*"v([^"]+)".*/\1/')
+DOWNLOAD_URL="https://github.com/kovidgoyal/kitty/releases/download/v$LATEST_VERSION/kitty-$LATEST_VERSION-x86_64.txz"
+echo "Descargando Kitty versión $LATEST_VERSION..."
+curl -L $DOWNLOAD_URL -o ~/$DOWNLOADS_DIR/kitty-$LATEST_VERSION-x86_64.txz
+echo "Eliminando versión anterior de Kitty (si existe)..."
+apt remove -y kitty
+cd /opt
+mv /home/$DEFAULT_USER/$DOWNLOADS_DIR/kitty-$LATEST_VERSION-x86_64.txz .
+7z x kitty-$LATEST_VERSION-x86_64.txz
+rm kitty-$LATEST_VERSION-x86_64.txz
+mkdir -p kitty
+mv kitty-$LATEST_VERSION-x86_64.tar kitty/
+cd kitty/
+tar -xf kitty-$LATEST_VERSION-x86_64.tar
+rm kitty-$LATEST_VERSION-x86_64.tar
+
+echo "Instalación de Kitty completada. Configuración abierta en nano."
+
+
 echo "Setting up kitty configuration for user $DEFAULT_USER..."
 mkdir -p /home/$DEFAULT_USER/.config/kitty
+touch /home/$DEFAULT_USER/.config/kitty/kitty.conf
 envsubst < "$SCRIPT_DIR/.config/kitty/kitty.conf" > /home/$DEFAULT_USER/.config/kitty/kitty.conf
 chmod +x /home/$DEFAULT_USER/.config/kitty/kitty.conf
+touch /home/$DEFAULT_USER/.config/kitty/color.ini
 envsubst < "$SCRIPT_DIR/.config/kitty/color.ini" > /home/$DEFAULT_USER/.config/kitty/color.ini
 chmod +x /home/$DEFAULT_USER/.config/kitty/color.ini
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/kitty
@@ -209,7 +234,7 @@ update_progress
 
 echo "Setting up picom configuration for $DEFAULT_USER..."
 mkdir ~/.config/picom
-touch picom.conf
+touch /home/$DEFAULT_USER/.config/picom/picom.conf
 envsubst < "$SCRIPT_DIR/.config/picom/picom.conf" > /home/$DEFAULT_USER/.config/picom/picom.conf
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/picom
 
@@ -221,7 +246,9 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/$DEFAULT_
 update_progress
 
 echo "Setting up zsh configuration for $DEFAULT_USER..."
+touch /home/$DEFAULT_USER/.zshrc
 envsubst < "$SCRIPT_DIR/~/.zshrc" > ~/.zshrc
+touch /home/$DEFAULT_USER/.p10k.zsh
 envsubst < "$SCRIPT_DIR/~/.p10k.zsh" > ~/.p10k.zsh
 ln -s -f /home/$DEFAULT_USER/.zshrc .zshrc 
 cd /usr/share/zsh-autocomplete
@@ -266,8 +293,11 @@ update_progress
 exit
 
 echo "Configuring Polybar for $DEFAULT_USER..."
+touch /home/$DEFAULT_USER/.config/polybar/launch.sh
 envsubst < "$SCRIPT_DIR/.config/polybar/launch.sh" > /home/$DEFAULT_USER/.config/polybar/launch.sh
+touch /home/$DEFAULT_USER/.config/polybar/workspace.ini
 envsubst < "$SCRIPT_DIR/.config/polybar/workspace.ini" > /home/$DEFAULT_USER/.config/polybar/workspace.ini
+touch /home/$DEFAULT_USER/.config/polybar/current.ini
 envsubst < "$SCRIPT_DIR/.config/polybar/current.ini" > /home/$DEFAULT_USER/.config/polybar/current.ini
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/polybar
 update_progress
@@ -275,12 +305,16 @@ update_progress
 echo "Setting up bspwm scripts for $DEFAULT_USER..."
 mkdir -p /home/$DEFAULT_USER/.config/bspwm/scripts
 cd /home/$DEFAULT_USER/.config/bspwm/scripts
+touch /home/$DEFAULT_USER/.config/bspwm/scripts/ethernet_status.sh
 envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/ethernet_status.sh" > ethernet_status.sh
 chmod +x ethernet_status.sh
+touch /home/$DEFAULT_USER/.config/bspwm/scripts/ethernet_status_copy.sh
 envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/ethernet_status_copy.sh" > ethernet_status_copy.sh
 chmod +x ethernet_status_copy.sh
+touch /home/$DEFAULT_USER/.config/bspwm/scripts/vpn_status.sh
 envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/vpn_status.sh" > vpn_status.sh
 chmod +x vpn_status.sh
+touch /home/$DEFAULT_USER/.config/bspwm/scripts/vpn_status_copy.sh
 envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/victim_to_hack.sh" > victim_to_hack.sh
 chmod +x victim_to_hack.sh
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/bspwm/scripts
@@ -314,6 +348,7 @@ rm nvim-linux64.tar.gz
 update_progress
 
 echo "Setting up Neovim configuration for $DEFAULT_USER..."
+top /home/$DEFAULT_USER/.config/nvim/init.lua
 envsubst < "$SCRIPT_DIR/.config/nvim/init.lua" > /home/$DEFAULT_USER/.config/nvim/init.lua
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/nvim
 update_progress
@@ -338,6 +373,7 @@ run_command "Installing i3lock and i3lock-fancy" "apt install -y i3lock && git c
 
 echo "Configuring Neovim plugins for $DEFAULT_USER..."
 mkdir -p /home/$DEFAULT_USER/.local/share/nvim/lazy/NvChad/lua/nvchad/plugins/
+touch /home/$DEFAULT_USER/.local/share/nvim/lazy/NvChad/lua/nvchad/plugins/init.lua
 envsubst < "$SCRIPT_DIR/nvim-plugins/init.lua" > /home/$DEFAULT_USER/.local/share/nvim/lazy/NvChad/lua/nvchad/plugins/init.lua
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.local/share/nvim
 update_progress
