@@ -182,21 +182,23 @@ chown $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/bspwm/bspwmrc
 update_progress
 
 echo "Downloading latest release of kitty terminal..."
-latest_release=$(curl -s https://api.github.com/repos/kovidgoyal/kitty/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-wget https://github.com/kovidgoyal/kitty/releases/download/$latest_release/kitty-$latest_release-x86_64.txz >/dev/null 2>&1
+# latest_release=$(curl -s https://api.github.com/repos/kovidgoyal/kitty/releases/latest | grep "tag_name" | cut -d '"' -f 4)
+# wget https://github.com/kovidgoyal/kitty/releases/download/$latest_release/kitty-$latest_release-x86_64.txz >/dev/null 2>&1
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin \
+    installer=nightly >/dev/null 2>&1
 update_progress
 
-echo "Moving kitty package to /opt and extracting..."
-mv kitty-$latest_release-x86_64.txz /opt/
-cd /opt/
-7z x kitty-$latest_release-x86_64.txz >/dev/null 2>&1
-rm kitty-$latest_release-x86_64.txz
-mkdir kitty
-mv kitty-$latest_release-x86_64.tar kitty/
-cd kitty/
-tar -xf kitty-$latest_release-x86_64.tar >/dev/null 2>&1
-rm kitty-$latest_release-x86_64.tar
-update_progress
+## echo "Moving kitty package to /opt and extracting..."
+## mv kitty-$latest_release-x86_64.txz /opt/
+## cd /opt/
+## 7z x kitty-$latest_release-x86_64.txz >/dev/null 2>&1
+## rm kitty-$latest_release-x86_64.txz
+## mkdir kitty
+## mv kitty-$latest_release-x86_64.tar kitty/
+## cd kitty/
+## tar -xf kitty-$latest_release-x86_64.tar >/dev/null 2>&1
+## rm kitty-$latest_release-x86_64.tar
+## update_progress
 
 echo "Setting up kitty configuration for user $DEFAULT_USER..."
 mkdir -p /home/$DEFAULT_USER/.config/kitty
@@ -245,8 +247,8 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/$DEFAULT_
 update_progress
 
 echo "Setting up zsh configuration for $DEFAULT_USER..."
-envsubst < "$SCRIPT_DIR/.zshrc" > /home/$DEFAULT_USER/.zshrc
-envsubst < "$SCRIPT_DIR/.p10k.zsh" > /home/$DEFAULT_USER/.p10k.zsh
+envsubst < "$SCRIPT_DIR/~/.zshrc" > /home/$DEFAULT_USER/.zshrc
+envsubst < "$SCRIPT_DIR/~/.p10k.zsh" > /home/$DEFAULT_USER/.p10k.zsh
 ln -s -f /home/$DEFAULT_USER/.zshrc /root/.zshrc
 update_progress
 
@@ -352,6 +354,7 @@ update_progress
 run_command "Installing i3lock and i3lock-fancy" "apt install -y i3lock && git clone https://github.com/meskarune/i3lock-fancy.git /opt/i3lock-fancy && cd /opt/i3lock-fancy && make install"
 
 echo "Configuring Neovim plugins for $DEFAULT_USER..."
+mkdir -p /home/$DEFAULT_USER/.local/share/nvim/lazy/NvChad/lua/nvchad/plugins/
 envsubst < "$SCRIPT_DIR/nvim-plugins/init.lua" > /home/$DEFAULT_USER/.local/share/nvim/lazy/NvChad/lua/nvchad/plugins/init.lua
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.local/share/nvim
 update_progress
