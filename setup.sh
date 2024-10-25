@@ -70,6 +70,7 @@ run_command "Installing zsh syntax highlighting and other utilities" "apt instal
 
 run_command "Installing bspwm and sxhkd" "apt install -y bspwm sxhkd"
 
+run_command "Installing picom" "apt install -y picom"
 
 run_command "Updating package lists again" "apt update -y"
 
@@ -83,21 +84,16 @@ update_progress
 
 run_command "Creating configuration directories for bspwm and sxhkd" "mkdir -p /home/$DEFAULT_USER/.config/{bspwm,sxhkd}"
 
-echo "Copying bspwmrc and sxhkdrc to $DEFAULT_USER's configuration directories..."
-cd bspwm/examples
-cp bspwmrc /home/$DEFAULT_USER/.config/bspwm/
-cp sxhkdrc /home/$DEFAULT_USER/.config/sxhkd/
-update_progress
-
 run_command "Setting ownership of configuration files to $DEFAULT_USER" "chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config"
 
 echo "Ensuring sxhkd configuration directory exists..."
 mkdir -p "/home/$DEFAULT_USER/.config/sxhkd/"
 update_progress
 
-echo "Writing sxhkd configuration..."
+echo "Generating sxhkd configuration..."
 SXHKD_CONFIG="/home/$DEFAULT_USER/.config/sxhkd/sxhkdrc"
 envsubst < "$SCRIPT_DIR/.config/sxhkd/sxhkdrc" > "$SXHKD_CONFIG"
+chmod +x "$SXHKD_CONFIG"
 update_progress
 
 echo "Creating scripts directory in bspwm configuration..."
@@ -106,6 +102,8 @@ update_progress
 
 echo "Generating bspwmrc configuration..."
 envsubst < "$SCRIPT_DIR/.config/bspwm/bspwmrc" > /home/$DEFAULT_USER/.config/bspwm/bspwmrc
+chmod +x /home/$DEFAULT_USER/.config/bspwm/bspwmrc
+chmod +x /home/$DEFAULT_USER/.config/bspwm
 update_progress
 
 echo "Copying bspwm_resize script..."
@@ -115,20 +113,20 @@ update_progress
 
 run_command "Setting ownership of bspwm configuration to $DEFAULT_USER" "chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/bspwm"
 
-run_command "Cloning picom repository" "git clone https://github.com/yshui/picom"
+# run_command "Cloning picom repository" "git clone https://github.com/yshui/picom"
+# echo "Building and installing picom..."
+# cd picom
+# meson setup --buildtype=release build >/dev/null 2>&1
+# ninja -C build >/dev/null 2>&1
+# ninja -C build install >/dev/null 2>&1
+# if [ $? -ne 0 ]; then
+#     echo "Error: Failed to build and install picom."
+#     exit 1
+# fi
+# cd ..
+# update_progress
 
-echo "Building and installing picom..."
-cd picom
-meson setup --buildtype=release build >/dev/null 2>&1
-ninja -C build >/dev/null 2>&1
-ninja -C build install >/dev/null 2>&1
-if [ $? -ne 0 ]; then
-    echo "Error: Failed to build and install picom."
-    exit 1
-fi
-cd ..
-update_progress
-
+sudo su
 echo "Changing to fonts directory..."
 cd /usr/local/share/fonts
 update_progress
@@ -146,10 +144,7 @@ echo "Extracting Hack.zip..."
 rm Hack.zip LICENSE.md README.md >/dev/null 2>&1
 update_progress
 
-echo "Generating bspwmrc configuration..."
-envsubst < "$SCRIPT_DIR/.config/bspwm/bspwmrc" > /home/$DEFAULT_USER/.config/bspwm/bspwmrc
-chown $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/bspwm/bspwmrc
-update_progress
+exit
 
 echo "Downloading latest release of kitty terminal..."
 # latest_release=$(curl -s https://api.github.com/repos/kovidgoyal/kitty/releases/latest | grep "tag_name" | cut -d '"' -f 4)
@@ -173,53 +168,66 @@ update_progress
 echo "Setting up kitty configuration for user $DEFAULT_USER..."
 mkdir -p /home/$DEFAULT_USER/.config/kitty
 envsubst < "$SCRIPT_DIR/.config/kitty/kitty.conf" > /home/$DEFAULT_USER/.config/kitty/kitty.conf
+chmod +x /home/$DEFAULT_USER/.config/kitty/kitty.conf
 envsubst < "$SCRIPT_DIR/.config/kitty/color.ini" > /home/$DEFAULT_USER/.config/kitty/color.ini
+chmod +x /home/$DEFAULT_USER/.config/kitty/color.ini
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/kitty
 update_progress
 
 echo "Downloading and setting wallpaper..."
 cd "$DOWNLOADS_DIR"
 wget "https://tcgmania.es/cdn/shop/files/banner-pokemon.jpg" -O fondo.jpg >/dev/null 2>&1
-sudo -u $DEFAULT_USER feh --bg-fill fondo.jpg >/dev/null 2>&1
+feh --bg-fill fondo.jpg >/dev/null 2>&1
 rm fondo.jpg
 update_progress
 
+sudo su
 echo "Copying kitty configuration to root's .config directory..."
 mkdir -p /root/.config/kitty
 cp /home/$DEFAULT_USER/.config/kitty/* /root/.config/kitty/
 update_progress
+exit
 
 run_command "Deploying polybar" "git clone https://github.com/VaughnValle/blue-sky.git"
 
 echo "Copying polybar configuration..."
+
 cd blue-sky/polybar
-mkdir -p /home/$DEFAULT_USER/.config/polybar
-cp -r * /home/$DEFAULT_USER/.config/polybar/ >/dev/null 2>&1
-echo '/home/'$DEFAULT_USER'/.config/polybar/launch.sh' >> /home/$DEFAULT_USER/.config/bspwm/bspwmrc
+cp -r * ~/.config/polybar/
+
+# cd blue-sky/polybar
+# mkdir -p /home/$DEFAULT_USER/.config/polybar
+# cp -r * /home/$DEFAULT_USER/.config/polybar/ >/dev/null 2>&1
+# echo '/home/'$DEFAULT_USER'/.config/polybar/launch.sh' >> /home/$DEFAULT_USER/.config/bspwm/bspwmrc
+sudo su
+
 cp fonts/* /usr/share/fonts/truetype/ >/dev/null 2>&1
 fc-cache -v >/dev/null 2>&1
-chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/polybar
-update_progress
-
-echo "Changing default shell to zsh for root and $DEFAULT_USER..."
-chsh -s /usr/bin/zsh root
-chsh -s /usr/bin/zsh $DEFAULT_USER
+usermod --shell /usr/bin/zsh root
+usermod --shell /usr/bin/zsh $DEFAULT_USER
+exit
+# chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/polybar
 update_progress
 
 echo "Setting up picom configuration for $DEFAULT_USER..."
-mkdir -p /home/$DEFAULT_USER/.config/picom
+mkdir ~/.config/picom
+touch picom.conf
 envsubst < "$SCRIPT_DIR/.config/picom/picom.conf" > /home/$DEFAULT_USER/.config/picom/picom.conf
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/picom
+
 update_progress
 
+sudo su
 echo "Cloning powerlevel10k theme..."
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/$DEFAULT_USER/powerlevel10k >/dev/null 2>&1
 update_progress
 
 echo "Setting up zsh configuration for $DEFAULT_USER..."
-envsubst < "$SCRIPT_DIR/~/.zshrc" > /home/$DEFAULT_USER/.zshrc
-envsubst < "$SCRIPT_DIR/~/.p10k.zsh" > /home/$DEFAULT_USER/.p10k.zsh
-ln -s -f /home/$DEFAULT_USER/.zshrc /root/.zshrc
+envsubst < "$SCRIPT_DIR/~/.zshrc" > ~/.zshrc
+envsubst < "$SCRIPT_DIR/~/.p10k.zsh" > ~/.p10k.zsh
+ln -s -f /home/$DEFAULT_USER/.zshrc .zshrc 
+cd /usr/share/zsh-autocomplete
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 update_progress
 
 echo "Installing zsh-sudo plugin..."
@@ -240,18 +248,24 @@ dpkg -i lsd_latest_amd64.deb >/dev/null 2>&1
 rm bat_latest_amd64.deb lsd_latest_amd64.deb
 update_progress
 
+exit
+cd "$DOWNLOADS_DIR"
 echo "Downloading and installing Java JDK 21..."
 wget https://download.java.net/java/GA/jdk21.0.2/f2283984656d49d69e91c558476027ac/13/GPL/openjdk-21.0.2_linux-x64_bin.tar.gz >/dev/null 2>&1
 tar xvf openjdk-21.0.2_linux-x64_bin.tar.gz >/dev/null 2>&1
-mv jdk-21.0.2/ /usr/lib/jvm/jdk-21
+sudo mv jdk-21.0.2/ /usr/lib/jvm/jdk-21
+sudo geany /usr/bin/burpsuite
 update_progress
 
 echo "Creating burpsuite launcher script..."
 cd /usr/bin
+echo $PATH
+sudo su
 touch burpsuite-launcher
 chmod +x burpsuite-launcher
 envsubst < "$SCRIPT_DIR/usr/bin/burpsuite-launcher" > burpsuite-launcher
 update_progress
+exit
 
 echo "Configuring Polybar for $DEFAULT_USER..."
 envsubst < "$SCRIPT_DIR/.config/polybar/launch.sh" > /home/$DEFAULT_USER/.config/polybar/launch.sh
@@ -275,13 +289,14 @@ chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/bspwm/scripts
 update_progress
 
 echo "Cloning fzf for $DEFAULT_USER..."
-sudo -u $DEFAULT_USER git clone --depth 1 https://github.com/junegunn/fzf.git /home/$DEFAULT_USER/.fzf >/dev/null 2>&1
-sudo -u $DEFAULT_USER /home/$DEFAULT_USER/.fzf/install --all >/dev/null 2>&1
-update_progress
+cd
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
 
-echo "Cloning fzf for root..."
-git clone --depth 1 https://github.com/junegunn/fzf.git /root/.fzf >/dev/null 2>&1
-/root/.fzf/install --all >/dev/null 2>&1
+sudo su 
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+exit
 update_progress
 
 run_command "Removing any existing neovim installation" "apt remove -y neovim"
