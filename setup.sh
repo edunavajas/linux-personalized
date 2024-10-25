@@ -34,6 +34,8 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 DEFAULT_USER=$(logname)
+export DEFAULT_USER
+
 echo "Default user detected: $DEFAULT_USER"
 
 echo "Determining script directory..."
@@ -362,3 +364,11 @@ update_progress
 rofi-theme-selector
 
 echo -ne "\nScript completed successfully.\n"
+
+
+Neovim plugins for test...(60/30)
+XDG_DATA_DIRS needs to be set for this script to function correctly.
+Using dirs from $PATH: /usr/local/share:/usr/share
+Checking themes in: /usr/share/rofi/themes
+/usr/bin/sed: no se puede leer /root/.config/rofi/config.rasi: No existe el fichero o el directorio
+
