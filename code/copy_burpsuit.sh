@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source "$SCRIPT_DIR/code/common.sh" 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 touch burpsuite-launcher
 chmod +x burpsuite-launcher

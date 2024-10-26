@@ -17,5 +17,5 @@ rm Hack.zip LICENSE.md README.md >/dev/null 2>&1
 cp fonts/* /usr/share/fonts/truetype/ >/dev/null 2>&1
 fc-cache -v >/dev/null 2>&1
 usermod --shell /usr/bin/zsh root
-usermod --shell /usr/bin/zsh $DEFAULT_USER
+usermod --shell /usr/bin/zsh $(logname)
 # chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/polybar

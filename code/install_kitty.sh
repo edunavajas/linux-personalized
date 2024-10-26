@@ -21,15 +21,21 @@ echo "Downloading latest release of kitty terminal..."
 ## tar -xf kitty-$latest_release-x86_64.tar >/dev/null 2>&1
 ## rm kitty-$latest_release-x86_64.tar
 ## update_progress
+DOWNLOADS_DIR=$(xdg-user-dir DOWNLOAD)
+DEFAULT_USER=$(logname)
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 RELEASE_URL="https://api.github.com/repos/kovidgoyal/kitty/releases/latest"
 LATEST_VERSION=$(curl -s $RELEASE_URL | grep "tag_name" | sed -E 's/.*"v([^"]+)".*/\1/')
 DOWNLOAD_URL="https://github.com/kovidgoyal/kitty/releases/download/v$LATEST_VERSION/kitty-$LATEST_VERSION-x86_64.txz"
 echo "Descargando Kitty versión $LATEST_VERSION..."
 curl -L $DOWNLOAD_URL -o ~/$DOWNLOADS_DIR/kitty-$LATEST_VERSION-x86_64.txz
+echo "Instalando Kitty versión $LATEST_VERSION..."
 cd /opt
 mv /home/$DEFAULT_USER/$DOWNLOADS_DIR/kitty-$LATEST_VERSION-x86_64.txz .
+echo "Descomprimiendo Kitty..."
 7z x kitty-$LATEST_VERSION-x86_64.txz
+echo "Borrando Kitty..."
 rm kitty-$LATEST_VERSION-x86_64.txz
 mkdir -p kitty
 mv kitty-$LATEST_VERSION-x86_64.tar kitty/
