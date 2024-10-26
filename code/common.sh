@@ -40,4 +40,12 @@ check_sudo() {
     fi
 }
 
+function run_as_user() {
+    bash -c "$1"
+}
+
+function run_as_root() {
+    sudo bash -c "$1"
+}
+
 

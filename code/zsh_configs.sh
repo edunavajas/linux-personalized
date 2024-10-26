@@ -2,7 +2,6 @@
 
 source "$SCRIPT_DIR/code/common.sh" 
 
-sudo su
 echo "Cloning powerlevel10k theme..."
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/$DEFAULT_USER/powerlevel10k >/dev/null 2>&1
 update_progress
@@ -34,5 +33,3 @@ dpkg -i bat_latest_amd64.deb >/dev/null 2>&1
 dpkg -i lsd_latest_amd64.deb >/dev/null 2>&1
 rm bat_latest_amd64.deb lsd_latest_amd64.deb
 update_progress
-
-exit

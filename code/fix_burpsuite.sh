@@ -13,9 +13,5 @@ update_progress
 echo "Creating burpsuite launcher script..."
 cd /usr/bin
 echo $PATH
-sudo su
-touch burpsuite-launcher
-chmod +x burpsuite-launcher
-envsubst < "$SCRIPT_DIR/usr/bin/burpsuite-launcher" > burpsuite-launcher
-update_progress
-exit
+
+run_as_root "source $SCRIPT_DIR/code/copy_burpsuit.sh"

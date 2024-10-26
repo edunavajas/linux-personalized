@@ -2,7 +2,7 @@
 
 source "$SCRIPT_DIR/code/common.sh" 
 
-sudo su
+
 echo "Changing to fonts directory..."
 cd /usr/local/share/fonts
 update_progress
@@ -27,5 +27,3 @@ usermod --shell /usr/bin/zsh root
 usermod --shell /usr/bin/zsh $DEFAULT_USER
 # chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/polybar
 update_progress
-
-exit

@@ -51,9 +51,4 @@ chmod +x /home/$DEFAULT_USER/.config/kitty/color.ini
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/kitty
 update_progress
 
-sudo su
-echo "Copying kitty configuration to root's .config directory..."
-mkdir -p /root/.config/kitty
-cp /home/$DEFAULT_USER/.config/kitty/* /root/.config/kitty/
-update_progress
-exit
+run_as_root "source $SCRIPT_DIR/code/copy_kitty.sh"

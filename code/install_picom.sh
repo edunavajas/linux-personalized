@@ -2,7 +2,6 @@
 
 source "$SCRIPT_DIR/code/common.sh" 
 
-cd
 run_command "Cloning picom repository" "git clone https://github.com/yshui/picom"
 echo "Building and installing picom..."
 cd picom
@@ -13,7 +12,7 @@ if [ $? -ne 0 ]; then
     echo "Error: Failed to build and install picom."
     exit 1
 fi
-cd ..
+cd ../
 update_progress
 
 echo "Setting up picom configuration for $DEFAULT_USER..."
