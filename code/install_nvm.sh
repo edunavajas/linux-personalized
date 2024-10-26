@@ -19,7 +19,6 @@ rm nvim-linux64.tar.gz
 update_progress
 
 echo "Setting up Neovim configuration for $DEFAULT_USER..."
-top /home/$DEFAULT_USER/.config/nvim/init.lua
 envsubst < "$SCRIPT_DIR/.config/nvim/init.lua" > /home/$DEFAULT_USER/.config/nvim/init.lua
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/nvim
 update_progress

@@ -21,5 +21,7 @@ touch /home/$DEFAULT_USER/.config/polybar/workspace.ini
 envsubst < "$SCRIPT_DIR/.config/polybar/workspace.ini" > /home/$DEFAULT_USER/.config/polybar/workspace.ini
 touch /home/$DEFAULT_USER/.config/polybar/current.ini
 envsubst < "$SCRIPT_DIR/.config/polybar/current.ini" > /home/$DEFAULT_USER/.config/polybar/current.ini
+touch /home/$DEFAULT_USER/.config/polybar/colors.ini
+envsubst < "$SCRIPT_DIR/.config/polybar/colors.ini" > /home/$DEFAULT_USER/.config/polybar/colors.ini
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/polybar
 update_progress
