@@ -32,6 +32,9 @@ umount /run/user/1000/doc >/dev/null 2>&1
 updatedb >/dev/null 2>&1
 update_progress
 
+rofi-theme-selector
+wait $!
+
 echo "Setting up rofi themes for $DEFAULT_USER..."
 mkdir -p /home/$DEFAULT_USER/.config/rofi/themes
 cd /opt
@@ -49,4 +52,3 @@ envsubst < "$SCRIPT_DIR/nvim-plugins/init.lua" > /home/$DEFAULT_USER/.local/shar
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.local/share/nvim
 update_progress
 
-rofi-theme-selector

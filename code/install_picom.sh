@@ -13,6 +13,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 cd ../
+rm -rf picom 
 update_progress
 
 echo "Setting up picom configuration for $DEFAULT_USER..."
