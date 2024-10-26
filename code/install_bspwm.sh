@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./common.sh
+source .$SCRIPT_DIR/code/common.sh 
 
 echo "Creating scripts directory in bspwm configuration..."
 mkdir -p /home/$DEFAULT_USER/.config/bspwm/scripts

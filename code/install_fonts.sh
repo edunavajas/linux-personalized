@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./common.sh
+source .$SCRIPT_DIR/code/common.sh 
 
 sudo su
 echo "Changing to fonts directory..."

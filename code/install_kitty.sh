@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./common.sh
+source .$SCRIPT_DIR/code/common.sh 
 
 echo "Downloading latest release of kitty terminal..."
 # latest_release=$(curl -s https://api.github.com/repos/kovidgoyal/kitty/releases/latest | grep "tag_name" | cut -d '"' -f 4)

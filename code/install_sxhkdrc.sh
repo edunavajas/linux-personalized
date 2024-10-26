@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./common.sh
+source .$SCRIPT_DIR/code/common.sh 
 
 run_command "Creating configuration directories for bspwm and sxhkd" "mkdir -p /home/$DEFAULT_USER/.config/{bspwm,sxhkd}"
 

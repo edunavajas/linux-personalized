@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./common.sh
+source .$SCRIPT_DIR/code/common.sh 
 
 cd "$DOWNLOADS_DIR"
 echo "Downloading and installing Java JDK 21..."

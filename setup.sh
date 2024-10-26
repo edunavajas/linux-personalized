@@ -9,32 +9,43 @@ check_sudo
 
 source ./code/install_update_dependencies.sh
 
-echo "Changing to home directory..."
-cd
+#echo "Changing to home directory..."
+#cd
 
+cd $SCRIPT_DIR
 source ./code/install_sxhkdrc.sh
 
+cd $SCRIPT_DIR
 source ./code/install_bspwm.sh
 
+cd $SCRIPT_DIR
 source ./code/install_picom.sh
 
+cd $SCRIPT_DIR
 source ./code/install_fonts.sh
 
+cd $SCRIPT_DIR
 source ./code/install_kitty.sh
 
+cd $SCRIPT_DIR
 source ./code/install_wallpaper.sh
 
+cd $SCRIPT_DIR
 source ./code/install_polybar.sh
 
+cd $SCRIPT_DIR
 source ./code/zsh_configs.sh
 
+cd $SCRIPT_DIR
 source ./code/fix_burpsuite.sh
 
+cd $SCRIPT_DIR
 source ./code/install_fzf.sh
 
+cd $SCRIPT_DIR
 source ./code/install_nvm.sh
 
 echo -ne "\nScript completed successfully.\n"
 
-sudo kill -9 -1
+#sudo kill -9 -1
 

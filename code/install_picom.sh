@@ -1,9 +1,10 @@
 #!/bin/bash
 
-source ./common.sh
+source .$SCRIPT_DIR/code/common.sh 
 
 run_command "Cloning picom repository" "git clone https://github.com/yshui/picom"
 echo "Building and installing picom..."
+cd
 cd picom
 meson setup --buildtype=release build >/dev/null 2>&1
 ninja -C build >/dev/null 2>&1
@@ -16,7 +17,7 @@ cd ..
 update_progress
 
 echo "Setting up picom configuration for $DEFAULT_USER..."
-mkdir ~/.config/picom
+mkdir /home/$DEFAULT_USER/.config/picom
 touch /home/$DEFAULT_USER/.config/picom/picom.conf
 envsubst < "$SCRIPT_DIR/.config/picom/picom.conf" > /home/$DEFAULT_USER/.config/picom/picom.conf
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/picom
