@@ -1,4 +1,3 @@
-->
 #!/bin/bash
  
 ip_address=$(/bin/cat /home/$DEFAULT_USER/.config/bin/target | awk '{print $1}')
@@ -15,7 +14,7 @@ mkdir /home/$DEFAULT_USER/.config/bin
 touch /home/$DEFAULT_USER/.config/bin/target
 
 nano /home/$DEFAULT_USER/.zshrc
--> 
+
 
 # Custom functions
 
