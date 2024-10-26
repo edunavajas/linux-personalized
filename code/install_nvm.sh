@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source .$SCRIPT_DIR/code/common.sh 
+source "$SCRIPT_DIR/code/common.sh" 
 
 run_command "Removing any existing neovim installation" "apt remove -y neovim"
 

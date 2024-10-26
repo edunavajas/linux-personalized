@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source .$SCRIPT_DIR/code/common.sh 
+source "$SCRIPT_DIR/code/common.sh" 
 
 echo "Cloning fzf for $DEFAULT_USER..."
 cd

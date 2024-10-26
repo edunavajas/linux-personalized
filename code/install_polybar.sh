@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source .$SCRIPT_DIR/code/common.sh 
+source "$SCRIPT_DIR/code/common.sh" 
 
 run_command "Deploying polybar" "git clone https://github.com/VaughnValle/blue-sky.git"
 

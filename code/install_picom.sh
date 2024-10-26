@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source .$SCRIPT_DIR/code/common.sh 
+source "$SCRIPT_DIR/code/common.sh" 
 
 run_command "Cloning picom repository" "git clone https://github.com/yshui/picom"
 echo "Building and installing picom..."

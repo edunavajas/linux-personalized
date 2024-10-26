@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source .$SCRIPT_DIR/code/common.sh 
+source "$SCRIPT_DIR/code/common.sh" 
 
 run_command "Backing up $SOURCE_LIST" "cp $SOURCE_LIST ${SOURCE_LIST}.backup"
 
