@@ -2,7 +2,7 @@
 
 source "$SCRIPT_DIR/code/common.sh" 
 
-source ./upgrade_system.sh
+source "$SCRIPT_DIR/code/upgrade_system.sh"
 
 run_command "Installing build-essential and related packages" "apt install -y build-essential git vim xcb libxcb-util0-dev libxcb-ewmh-dev libxcb-randr0-dev libxcb-icccm4-dev libxcb-keysyms1-dev"
 

@@ -12,6 +12,7 @@ envsubst < "$SCRIPT_DIR/system/.zshrc" > ~/.zshrc
 touch /home/$DEFAULT_USER/.p10k.zsh
 envsubst < "$SCRIPT_DIR/system/.p10k.zsh" > ~/.p10k.zsh
 ln -s -f /home/$DEFAULT_USER/.zshrc .zshrc 
+mkdir -p /usr/share/zsh-autocomplete
 cd /usr/share/zsh-autocomplete
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 

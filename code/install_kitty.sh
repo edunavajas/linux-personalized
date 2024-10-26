@@ -22,14 +22,15 @@ echo "Downloading latest release of kitty terminal..."
 ## rm kitty-$latest_release-x86_64.tar
 ## update_progress
 DOWNLOADS_DIR=$(xdg-user-dir DOWNLOAD)
-DEFAULT_USER=$(logname)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 RELEASE_URL="https://api.github.com/repos/kovidgoyal/kitty/releases/latest"
 LATEST_VERSION=$(curl -s $RELEASE_URL | grep "tag_name" | sed -E 's/.*"v([^"]+)".*/\1/')
 DOWNLOAD_URL="https://github.com/kovidgoyal/kitty/releases/download/v$LATEST_VERSION/kitty-$LATEST_VERSION-x86_64.txz"
 echo "Descargando Kitty versión $LATEST_VERSION..."
-curl -L $DOWNLOAD_URL -o ~/$DOWNLOADS_DIR/kitty-$LATEST_VERSION-x86_64.txz
+echo "Descargando Kitty desde $DOWNLOAD_URL..."
+echo "Descargando Kitty EN  $DOWNLOADS_DIR"
+curl -L $DOWNLOAD_URL -o /home/$DEFAULT_USER/kitty-$LATEST_VERSION-x86_64.txz
 echo "Instalando Kitty versión $LATEST_VERSION..."
 cd /opt
 mv /home/$DEFAULT_USER/$DOWNLOADS_DIR/kitty-$LATEST_VERSION-x86_64.txz .
@@ -55,6 +56,5 @@ touch /home/$DEFAULT_USER/.config/kitty/color.ini
 envsubst < "$SCRIPT_DIR/.config/kitty/color.ini" > /home/$DEFAULT_USER/.config/kitty/color.ini
 chmod +x /home/$DEFAULT_USER/.config/kitty/color.ini
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/kitty
-update_progress
 
 run_as_root "source $SCRIPT_DIR/code/copy_kitty.sh"
