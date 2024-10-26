@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Created by newuser for 5.9
-source /home/$DEFAULT_USER/powerlevel10k/powerlevel10k.zsh-theme
+source /home/$(logname)/powerlevel10k/powerlevel10k.zsh-theme
 
 # ZSH AutoSuggestions PLugin
 

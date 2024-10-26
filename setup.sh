@@ -37,6 +37,9 @@ run_as_root "source $SCRIPT_DIR/code/install_fzf.sh"
 
 run_as_user "source $SCRIPT_DIR/code/install_nvm.sh"
 
+zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 echo -ne "\nScript completed successfully.\n"
 
 #sudo kill -9 -1
