@@ -24,6 +24,8 @@ source ./code/install_picom.sh
 cd $SCRIPT_DIR
 source ./code/install_fonts.sh
 
+echo "Setting up fonts..."
+
 cd $SCRIPT_DIR
 source ./code/install_kitty.sh
 
