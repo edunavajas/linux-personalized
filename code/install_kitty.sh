@@ -29,11 +29,10 @@ LATEST_VERSION=$(curl -s $RELEASE_URL | grep "tag_name" | sed -E 's/.*"v([^"]+)"
 DOWNLOAD_URL="https://github.com/kovidgoyal/kitty/releases/download/v$LATEST_VERSION/kitty-$LATEST_VERSION-x86_64.txz"
 echo "Descargando Kitty versión $LATEST_VERSION..."
 echo "Descargando Kitty desde $DOWNLOAD_URL..."
-echo "Descargando Kitty EN  $DOWNLOADS_DIR"
 curl -L $DOWNLOAD_URL -o /home/$DEFAULT_USER/kitty-$LATEST_VERSION-x86_64.txz
 echo "Instalando Kitty versión $LATEST_VERSION..."
 cd /opt
-mv /home/$DEFAULT_USER/$DOWNLOADS_DIR/kitty-$LATEST_VERSION-x86_64.txz .
+mv /home/$DEFAULT_USER/kitty-$LATEST_VERSION-x86_64.txz .
 echo "Descomprimiendo Kitty..."
 7z x kitty-$LATEST_VERSION-x86_64.txz
 echo "Borrando Kitty..."
