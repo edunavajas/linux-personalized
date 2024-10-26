@@ -5,7 +5,7 @@ TOTAL_STEPS=30
 CURRENT_STEP=0
 
 DEFAULT_USER=$(logname)
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SOURCE_LIST="/etc/apt/sources.list"
 DOWNLOADS_DIR=$(xdg-user-dir DOWNLOAD)
 
