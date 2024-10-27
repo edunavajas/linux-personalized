@@ -81,12 +81,12 @@ alias ls='lsd --group-dirs=first'
 function settarget(){
     ip_address=$1
     machine_name=$2
-    echo "$ip_address $machine_name" > /home/$DEFAULT_USER/.config/bin/target
+    echo "$ip_address $machine_name" > /home/$(logname)/.config/bin/target
 }
 
 
 function cleartarget(){
-    echo '' > /home/$DEFAULT_USER/.config/bin/target
+    echo '' > /home/$(logname)/.config/bin/target
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

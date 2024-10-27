@@ -44,7 +44,7 @@ tar -xf kitty-$LATEST_VERSION-x86_64.tar
 rm kitty-$LATEST_VERSION-x86_64.tar
 
 echo "Instalación de Kitty completada. Configuración abierta en nano."
-
+usermod --shell /usr/bin/zsh $(logname)
 
 echo "Setting up kitty configuration for user $DEFAULT_USER..."
 mkdir -p /home/$DEFAULT_USER/.config/kitty
