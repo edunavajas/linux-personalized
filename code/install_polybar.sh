@@ -15,8 +15,8 @@ cp -r * ~/.config/polybar/
 # echo '/home/'$DEFAULT_USER'/.config/polybar/launch.sh' >> /home/$DEFAULT_USER/.config/bspwm/bspwmrc
 
 echo "Configuring Polybar for $DEFAULT_USER..."
-cp -rf /home/$DEFAULT_USER/.config/polybar /home/$DEFAULT_USER/.config/polybar
-cp -rf /home/$DEFAULT_USER/usr/share/fonts/truetype/* /home/$DEFAULT_USER/.local/share/fonts/truetype
+cp -rf $SCRIPT_DIR/.config/polybar /home/$DEFAULT_USER/.config/polybar
+cp -rf $SCRIPT_DIR/usr/share/fonts/truetype/* /home/$DEFAULT_USER/.local/share/fonts/truetype
 #touch /home/$DEFAULT_USER/.config/polybar/launch.sh
 #envsubst < "$SCRIPT_DIR/.config/polybar/launch.sh" > /home/$DEFAULT_USER/.config/polybar/launch.sh
 #touch /home/$DEFAULT_USER/.config/polybar/workspace.ini
