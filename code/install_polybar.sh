@@ -16,7 +16,7 @@ cp -r * ~/.config/polybar/
 
 echo "Configuring Polybar for $DEFAULT_USER..."
 cp -rf /home/$DEFAULT_USER/.config/polybar /home/$DEFAULT_USER/.config/polybar
-cp -rf /home/$DEFAULT_USER/usr/share/fonts/truetype /home/$DEFAULT_USER/.local/share/fonts/truetype
+cp -rf /home/$DEFAULT_USER/usr/share/fonts/truetype/* /home/$DEFAULT_USER/.local/share/fonts/truetype
 #touch /home/$DEFAULT_USER/.config/polybar/launch.sh
 #envsubst < "$SCRIPT_DIR/.config/polybar/launch.sh" > /home/$DEFAULT_USER/.config/polybar/launch.sh
 #touch /home/$DEFAULT_USER/.config/polybar/workspace.ini
