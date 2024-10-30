@@ -19,4 +19,3 @@ cp -rf $SCRIPT_DIR/usr/share/fonts/truetype/* /usr/share/fonts/truetype/
 fc-cache -v >/dev/null 2>&1
 usermod --shell /usr/bin/zsh root
 usermod --shell /usr/bin/zsh $(logname)
-# chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/polybar

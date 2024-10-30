@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Variables compartidas
 TOTAL_STEPS=14
 CURRENT_STEP=0
 

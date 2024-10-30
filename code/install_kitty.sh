@@ -3,24 +3,7 @@
 source "$SCRIPT_DIR/code/common.sh" 
 
 echo "Downloading latest release of kitty terminal..."
-# latest_release=$(curl -s https://api.github.com/repos/kovidgoyal/kitty/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-# wget https://github.com/kovidgoyal/kitty/releases/download/$latest_release/kitty-$latest_release-x86_64.txz >/dev/null 2>&1
-# curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin \
-#     installer=nightly >/dev/null 2>&1
-# run_command "Installing kitty" "apt install -y kitty"	
-# 
 
-## echo "Moving kitty package to /opt and extracting..."
-## mv kitty-$latest_release-x86_64.txz /opt/
-## cd /opt/
-## 7z x kitty-$latest_release-x86_64.txz >/dev/null 2>&1
-## rm kitty-$latest_release-x86_64.txz
-## mkdir kitty
-## mv kitty-$latest_release-x86_64.tar kitty/
-## cd kitty/
-## tar -xf kitty-$latest_release-x86_64.tar >/dev/null 2>&1
-## rm kitty-$latest_release-x86_64.tar
-## 
 DOWNLOADS_DIR=$(xdg-user-dir DOWNLOAD)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
