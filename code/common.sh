@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables compartidas
-TOTAL_STEPS=30
+TOTAL_STEPS=14
 CURRENT_STEP=0
 
 DEFAULT_USER=$(logname)
@@ -17,6 +17,7 @@ export DOWNLOADS_DIR
 update_progress() {
     ((CURRENT_STEP++))
     PERCENT=$(( CURRENT_STEP * 100 / TOTAL_STEPS ))
+    clear
     echo -ne "Progress: ["
     for ((i=0; i< $PERCENT/2; i++)); do echo -n "#"; done
     for ((i=$PERCENT/2; i<50; i++)); do echo -n " "; done
@@ -30,7 +31,7 @@ run_command() {
         echo "Error: $1 failed."
         exit 1
     fi
-    update_progress
+    
 }
 
 check_sudo() {

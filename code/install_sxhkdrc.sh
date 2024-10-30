@@ -8,11 +8,11 @@ run_command "Setting ownership of configuration files to $DEFAULT_USER" "chown -
 
 echo "Ensuring sxhkd configuration directory exists..."
 mkdir -p "/home/$DEFAULT_USER/.config/sxhkd/"
-update_progress
+
 
 echo "Generating sxhkd configuration..."
 SXHKD_CONFIG="/home/$DEFAULT_USER/.config/sxhkd/sxhkdrc"
 touch "$SXHKD_CONFIG"
 envsubst < "$SCRIPT_DIR/.config/sxhkd/sxhkdrc" > "$SXHKD_CONFIG"
 chmod +x "$SXHKD_CONFIG"
-update_progress
+

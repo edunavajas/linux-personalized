@@ -8,7 +8,7 @@ echo "Downloading latest release of kitty terminal..."
 # curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin \
 #     installer=nightly >/dev/null 2>&1
 # run_command "Installing kitty" "apt install -y kitty"	
-# update_progress
+# 
 
 ## echo "Moving kitty package to /opt and extracting..."
 ## mv kitty-$latest_release-x86_64.txz /opt/
@@ -20,7 +20,7 @@ echo "Downloading latest release of kitty terminal..."
 ## cd kitty/
 ## tar -xf kitty-$latest_release-x86_64.tar >/dev/null 2>&1
 ## rm kitty-$latest_release-x86_64.tar
-## update_progress
+## 
 DOWNLOADS_DIR=$(xdg-user-dir DOWNLOAD)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 

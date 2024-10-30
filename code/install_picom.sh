@@ -14,7 +14,7 @@ if [ $? -ne 0 ]; then
 fi
 cd ../
 rm -rf picom 
-update_progress
+
 
 echo "Setting up picom configuration for $DEFAULT_USER..."
 mkdir -p /home/$DEFAULT_USER/.config/picom
@@ -26,4 +26,3 @@ chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/picom
 
 echo "Picom complete..."
 
-update_progress
