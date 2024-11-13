@@ -24,15 +24,17 @@ echo "Setting up bspwm scripts for $DEFAULT_USER..."
 mkdir -p /home/$DEFAULT_USER/.config/bspwm/scripts
 cd /home/$DEFAULT_USER/.config/bspwm/scripts
 touch /home/$DEFAULT_USER/.config/bspwm/scripts/ethernet_status.sh
-envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/ethernet_status.sh" > ethernet_status.sh
+cp -f "$SCRIPT_DIR/.config/bspwm/scripts/ethernet_status.sh" ethernet_status.sh
 chmod +x ethernet_status.sh
 touch /home/$DEFAULT_USER/.config/bspwm/scripts/ethernet_status_copy.sh
-envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/ethernet_status_copy.sh" > ethernet_status_copy.sh
+cp -f "$SCRIPT_DIR/.config/bspwm/scripts/ethernet_status_copy.sh" ethernet_status_copy.sh
 chmod +x ethernet_status_copy.sh
 touch /home/$DEFAULT_USER/.config/bspwm/scripts/vpn_status.sh
-envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/vpn_status.sh" > vpn_status.sh
+cp -f "$SCRIPT_DIR/.config/bspwm/scripts/vpn_status.sh" vpn_status.sh
 chmod +x vpn_status.sh
 touch /home/$DEFAULT_USER/.config/bspwm/scripts/vpn_status_copy.sh
-envsubst < "$SCRIPT_DIR/.config/bspwm/scripts/victim_to_hack.sh" > victim_to_hack.sh
+cp -f "$SCRIPT_DIR/.config/bspwm/scripts/vpn_status_copy.sh" vpn_status_copy.sh
+chmod +x vpn_status_copy.sh
+cp -f "$SCRIPT_DIR/.config/bspwm/scripts/victim_to_hack.sh" victim_to_hack.sh
 chmod +x victim_to_hack.sh
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/bspwm/scripts

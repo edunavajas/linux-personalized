@@ -11,12 +11,12 @@ cp -r * ~/.config/polybar/
 
 echo "Configuring Polybar for $DEFAULT_USER..."
 touch /home/$DEFAULT_USER/.config/polybar/launch.sh
-envsubst < "$SCRIPT_DIR/.config/polybar/launch.sh" > /home/$DEFAULT_USER/.config/polybar/launch.sh
+cp -f "$SCRIPT_DIR/.config/polybar/launch.sh" /home/$DEFAULT_USER/.config/polybar/launch.sh
 touch /home/$DEFAULT_USER/.config/polybar/workspace.ini
-envsubst < "$SCRIPT_DIR/.config/polybar/workspace.ini" > /home/$DEFAULT_USER/.config/polybar/workspace.ini
+cp -f "$SCRIPT_DIR/.config/polybar/workspace.ini" /home/$DEFAULT_USER/.config/polybar/workspace.ini
 touch /home/$DEFAULT_USER/.config/polybar/current.ini
-envsubst < "$SCRIPT_DIR/.config/polybar/current.ini" > /home/$DEFAULT_USER/.config/polybar/current.ini
+cp -f "$SCRIPT_DIR/.config/polybar/current.ini" /home/$DEFAULT_USER/.config/polybar/current.ini
 touch /home/$DEFAULT_USER/.config/polybar/colors.ini
-envsubst < "$SCRIPT_DIR/.config/polybar/colors.ini" > /home/$DEFAULT_USER/.config/polybar/colors.ini
+cp -f "$SCRIPT_DIR/.config/polybar/colors.ini" /home/$DEFAULT_USER/.config/polybar/colors.ini
 chown -R $DEFAULT_USER:$DEFAULT_USER /home/$DEFAULT_USER/.config/polybar
 chmod +x /home/$DEFAULT_USER/.config/polybar/launch.sh
