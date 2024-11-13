@@ -1,7 +1,7 @@
 #!/bin/bash
  
-ip_address=$(/bin/cat /home/$DEFAULT_USER/.config/bin/target | awk '{print $1}')
-machine_name=$(/bin/cat /home/$DEFAULT_USER/.config/bin/target | awk '{print $2}')
+ip_address=$(/bin/cat /home/$(logname)/.config/bin/target | awk '{print $1}')
+machine_name=$(/bin/cat /home/$(logname)/.config/bin/target | awk '{print $2}')
  
 if [ $ip_address ] && [ $machine_name ]; then
     echo "%{F#e51d0b}󰓾 %{F#ffffff}$ip_address%{u-} - $machine_name"
@@ -10,10 +10,10 @@ else
 fi
 
 
-mkdir /home/$DEFAULT_USER/.config/bin
-touch /home/$DEFAULT_USER/.config/bin/target
+mkdir /home/$(logname)/.config/bin
+touch /home/$(logname)/.config/bin/target
 
-nano /home/$DEFAULT_USER/.zshrc
+nano /home/$(logname)/.zshrc
 
 
 # Custom functions
@@ -21,9 +21,9 @@ nano /home/$DEFAULT_USER/.zshrc
 function settarget(){
     ip_address=$1
     machine_name=$2
-    echo "$ip_address $machine_name" > /home/$DEFAULT_USER/.config/bin/target
+    echo "$ip_address $machine_name" > /home/$(logname)/.config/bin/target
 }
 
 function cleartarget(){
-    echo '' > /home/$DEFAULT_USER/.config/bin/target
+    echo '' > /home/$(logname)/.config/bin/target
 }
