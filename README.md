@@ -11,6 +11,7 @@
 `linux-personalized` is a script designed to create a personalized and optimized Linux environment tailored for hacking, pentesting, and development. It simplifies the setup of tools, plugins, and configurations to maximize productivity and usability.
 
 [Blog about it](https://blog.edunavajas.com/blog/linux-personalized)
+
 [Custom commands](https://blog.edunavajas.com/custom-linux-commands/)
 ---
 
