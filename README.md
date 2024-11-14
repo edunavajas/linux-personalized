@@ -1,9 +1,8 @@
 
-# linux-personalized
+![Project Logo](https://blog.edunavajas.com/public/assets/blog/linux-config-env.png)
 
 > ⚠ **Important**: It is highly recommended to use this configuration script on [Parrot OS](https://www.parrotsec.org/) for optimal compatibility and performance. Parrot OS is a Debian-based Linux distribution designed specifically for penetration testing, ethical hacking, and security research. While it can work on other Linux distributions, some features may require additional configuration.
 
-![Project Logo](/images/logo.png)
 
 ---
 
@@ -11,6 +10,8 @@
 
 `linux-personalized` is a script designed to create a personalized and optimized Linux environment tailored for hacking, pentesting, and development. It simplifies the setup of tools, plugins, and configurations to maximize productivity and usability.
 
+[Blog about it](https://blog.edunavajas.com/blog/linux-personalized)
+[Custom commands](https://blog.edunavajas.com/custom-linux-commands/)
 ---
 
 ## Features
@@ -62,7 +63,7 @@ Once installed, restart your system to apply all configurations. You can explore
 
 Here is an example of the setup script in action:
 
-![Demo GIF](/images/demo.gif)
+![Demo video!](https://blog.edunavajas.com/public/assets/blog/demo_personalized.mp4)
 
 ---
 
