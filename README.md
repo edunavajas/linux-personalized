@@ -64,10 +64,7 @@ Once installed, restart your system to apply all configurations. You can explore
 
 Here is an example of the setup script in action:
 
-<video width="600" controls>
-  <source src="https://blog.edunavajas.com/public/assets/blog/demo_personalized.mp4" type="video/mp4">
-  Video not suported
-</video>
+![Project Logo](https://blog.edunavajas.com/public/assets/blog/demo_personalized.gif)
 
 ---
 
